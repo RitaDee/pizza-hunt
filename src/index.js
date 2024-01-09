@@ -67,13 +67,13 @@ const Header = () => {
 };
 
 const Menu = () => {
+  const pizzas = pizzaData;
   return (
     <main className="menu">
       <h2>Our Menu</h2>
       <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}
+        {pizzas &&
+          pizzaData.map((pizza) => <Pizza pizzaObj={pizza} key={pizza.name} />)}
       </ul>
     </main>
   );
