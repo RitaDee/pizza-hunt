@@ -76,28 +76,36 @@ const Menu = () => {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="pizzas">
-        {numPizzas > 0
-          ? pizzaData.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))
-          : <p>We're currently working on our menu. Please check back later :)</p>}
-      </ul>
+
+      {numPizzas > 0 ? (
+        <>
+          <p>
+            Authentic Italian Cuisine. 6 creative dishes to choose from. All
+            from our stone oven, all organic, all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>We're currently working on our menu. Please check back later.</p>
+      )}
     </main>
   );
 };
-
-const Pizza = (props) => {
-  if (props.pizzaObj.soldOut) return null;
+const Pizza = ({ pizzaObj }) => {
+  if (pizzaObj.soldOut) return null;
 
   return (
     <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.name} />
+      <img src={pizzaObj.photoName} alt="pizza" />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
-        <span>{props.pizzaObj.soldOut}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
+        <span>{pizzaObj.soldOut}</span>
       </div>
     </li>
   );
@@ -113,12 +121,26 @@ const Footer = () => {
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>We're open until {closeHour}:00. Come visit us or order online.</p>
-          <button className="btn">Order Now</button>
-        </div>
-      ) : <p>We're closed for the day. Check back between {openHour}:00 to {closeHour}:00</p>}
+        <Order closeHour={closeHour} openHour={openHour} />
+      ) : (
+        <p>
+          We're closed for the day. Check back between {openHour}:00 to{" "}
+          {closeHour}:00
+        </p>
+      )}
     </footer>
+  );
+};
+
+const Order = ({ closeHour, openHour }) => {
+  return (
+    <div className="order">
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className="btn">Order Now</button>
+    </div>
   );
 };
 
